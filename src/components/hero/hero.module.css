@@ -1,0 +1,47 @@
+.hero {
+  height: 90vh;
+  width: 100%;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("../../assets/hero.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: "Inria Serif", serif;
+}
+
+.glassCard {
+  background: rgba(255, 255, 255, 0.1);
+  /* backdrop-filter: blur(2px); */
+  /* -webkit-backdrop-filter: blur(10px); */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 800px;
+  text-align: center;
+  /* color: white; */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.heroTitle {
+  /* font-family: "Inria Serif", serif; */
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: black;
+  display: inline-block;
+  transform: scaleY(1.15);
+}
+
+.heroText {
+  /* font-family: "Inria Serif", serif; */
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: black;
+  max-width: 90%;
+  margin: 0 auto;
+  font-weight: 450;
+}
