@@ -10,6 +10,8 @@
 
 body {
   font-family: "Inter", sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 li {
@@ -20,25 +22,12 @@ a {
   text-decoration: none;
 }
 
-/* 1. تحسين حساب الحجم (Box Sizing) */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* 2. إزالة الهوامش الافتراضية */
-* {
-  margin: 0;
-}
-
-/* 3. تحسين شكل الخطوط في المتصفحات */
-body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* 4. إزالة مشاكل الصور والفيديوهات */
 img,
 picture,
 video,
@@ -48,7 +37,6 @@ svg {
   max-width: 100%;
 }
 
-/* 5. إزالة ستايلات الخطوط من عناصر الـ Form */
 input,
 button,
 textarea,

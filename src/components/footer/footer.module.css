@@ -1,0 +1,111 @@
+.footer {
+  background-color: #102a36;
+  color: #ffffff;
+  padding: 60px 8% 20px;
+  font-family: "Inter", sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 40px;
+}
+
+.brandCol {
+  flex: 1;
+  min-width: 250px;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  height: 35px;
+  filter: brightness(0) invert(1);
+}
+
+.brandName {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.brandDesc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.linksCol {
+  flex: 0.5;
+  min-width: 150px;
+}
+
+.colTitle {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.linksList {
+  list-style: none;
+  padding: 0;
+}
+
+.linksList li {
+  margin-bottom: 12px;
+}
+
+.linksList a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: 0.3s;
+}
+
+.linksList a:hover {
+  color: #ffffff;
+  padding-left: 5px;
+}
+
+.aboutCol {
+  flex: 1.5;
+  min-width: 300px;
+}
+
+.aboutText {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.bottomBar {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* التجاوب مع الموبايل */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+  .logoWrapper {
+    justify-content: center;
+  }
+  .bottomBar {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

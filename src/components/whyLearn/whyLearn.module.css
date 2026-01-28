@@ -1,0 +1,100 @@
+.container {
+  padding: 80px 8%;
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  font-family: "Inria Serif", serif;
+  font-size: 2.5rem;
+  color: #004687;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-family: "Inter", sans-serif;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto 50px;
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.card {
+  padding: 40px 25px;
+  border-radius: 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.iconWrapper {
+  font-size: 45px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.7; /* ارتفاع السطور المطلوبة */
+  opacity: 0.95;
+}
+
+/* الألوان من التصميم */
+.orange {
+  background-color: #f58442;
+}
+.blue {
+  background-color: #028aba;
+}
+.purple {
+  background-color: #83749f;
+}
+.pink {
+  background-color: #ec5a6d;
+}
+.green {
+  background-color: #c3c198;
+  color: #333;
+}
+.red {
+  background-color: #df1720;
+}
+
+/* Responsive للموبايل والتابلت */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    padding: 40px 5%;
+  }
+}
