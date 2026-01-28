@@ -1,0 +1,238 @@
+.container {
+  padding: 40px 8%;
+  text-align: center;
+}
+.mainTitle {
+  font-family: "Inria Serif", serif;
+  color: #003366;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+}
+.itemsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.itemCard {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e0e6ed;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+  /* margin: auto; */
+}
+.itemCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.imageBox {
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.imageBox img {
+  width: 95%;
+  height: 95%;
+  object-fit: contain;
+}
+.labelBox {
+  padding: 12px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #003366;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(5px);
+}
+.modalContent {
+  background: white;
+  width: 100%;
+  /* width: 50%; */
+  max-width: 700px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  animation: zoom 0.3s ease;
+}
+@keyframes zoom {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.modalImageBox {
+  position: relative;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modalImageBox img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+.playOverlay {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.4);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #fff;
+}
+.playIcon {
+  color: white;
+  font-size: 2rem;
+}
+.modalLabelBox {
+  padding: 20px;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 10;
+  font-weight: 100;
+}
+
+.quizSection {
+  margin-top: 80px;
+  padding: 40px 0;
+  border-top: 1px dashed #ccc;
+}
+.quizTitle {
+  font-size: 2rem;
+  color: #003366;
+  margin-bottom: 15px;
+}
+.quizDesc {
+  color: #66788a;
+  margin-bottom: 25px;
+}
+
+.startQuizBtn {
+  background: #d3d3df;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-block;
+  color: #003366;
+  transition: 0.3s;
+}
+
+.startQuizBtn:hover {
+  background: #bcc0d1;
+  color: #003366;
+}
+
+@media (max-width: 1024px) {
+  .itemsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0 20px;
+  }
+
+  .mainTitle {
+    font-size: 2.2rem;
+  }
+
+  .modalContent {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 5%;
+  }
+
+  .mainTitle {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  .itemsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .imageBox {
+    height: 180px;
+  }
+
+  .labelBox {
+    font-size: 1.1rem;
+    padding: 8px;
+  }
+
+  .modalImageBox {
+    height: 300px;
+  }
+
+  .modalLabelBox {
+    font-size: 1.4rem;
+    padding: 15px;
+  }
+
+  .playOverlay {
+    width: 60px;
+    height: 60px;
+  }
+
+  .playIcon {
+    font-size: 1.5rem;
+  }
+
+  .closeBtn {
+    top: 5px;
+    right: 15px;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .itemsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .quizTitle {
+    font-size: 1.5rem;
+  }
+
+  .startQuizBtn {
+    width: 100%;
+    padding: 15px;
+  }
+}
