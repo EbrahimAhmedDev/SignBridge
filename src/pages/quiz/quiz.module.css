@@ -51,7 +51,6 @@
   transform: translateY(-3px);
 }
 
-/* البوردر المميز جداً عند الاختيار */
 .selectedBorder {
   border: 4px solid #003366 !important;
   background-color: #f0f7ff;
@@ -93,7 +92,6 @@
   transition: 0.3s;
 }
 
-/* شكل الزر وهو مغلق */
 .submitBtn:disabled {
   background-color: #cccccc;
   color: #888;
@@ -106,8 +104,6 @@
   transform: scale(1.05);
 }
 
-/* ... الأكواد السابقة الخاصة بـ quizPage و optionCard ... */
-
 .actionSection {
   margin-top: 40px;
   padding-bottom: 60px;
@@ -119,7 +115,7 @@
 .resultControls {
   display: flex;
   align-items: center;
-  gap: 30px; /* المسافة بين النتيجة والزر */
+  gap: 30px;
   animation: fadeIn 0.5s ease-in;
 }
 
@@ -173,5 +169,41 @@
 @media (max-width: 768px) {
   .optionsGrid {
     grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .quizPage {
+    padding: 30px 5%;
+  }
+
+  .optionCard {
+    padding: 8px;
+    max-width: 250px;
+    margin: 0 auto;
+  }
+
+  .optionCard img {
+    max-height: 150px;
+    width: auto;
+  }
+
+  .questionText {
+    font-size: 1.1rem;
+  }
+
+  .resultControls {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .scoreBadge {
+    font-size: 1.1rem;
+    padding: 10px 20px;
+  }
+
+  .submitBtn,
+  .backBtn {
+    padding: 12px 40px;
+    width: 100%;
   }
 }

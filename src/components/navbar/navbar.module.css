@@ -64,3 +64,71 @@
   background-color: #004687;
   color: #fff;
 }
+
+/* الأكواد الحالية التي لديك تبقى كما هي، وأضف عليها ما يلي: */
+
+.menuIcon {
+  display: none; /* مخفي في الشاشات الكبيرة */
+  font-size: 1.8rem;
+  color: #004687;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.mobileAuth {
+  display: none; /* مخفي في الكمبيوتر */
+}
+
+/* ================= Media Queries ================= */
+
+@media (max-width: 992px) {
+  .menuIcon {
+    display: block; /* تظهر أيقونة الهمبرجر */
+  }
+
+  .navLinks {
+    position: fixed;
+    top: 0;
+    right: -100%; /* مخفية خارج الشاشة */
+    width: 70%;
+    height: 100vh;
+    background-color: #fff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    transition: 0.4s ease-in-out;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  /* عندما تكون القائمة مفتوحة */
+  .activeMenu {
+    right: 0;
+  }
+
+  .auth {
+    display: none; /* إخفاء أزرار الـ Desktop */
+  }
+
+  .mobileAuth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .mobileAuth a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #004687;
+  }
+}
+
+/* للشاشات الصغيرة جداً */
+@media (max-width: 480px) {
+  .navLinks {
+    width: 100%;
+  }
+}
