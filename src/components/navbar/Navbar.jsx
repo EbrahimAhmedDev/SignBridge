@@ -1,14 +1,12 @@
 // import logo from "../../assets/Logo.png";
 // import { NavLink, Link } from "react-router-dom";
 // import style from "./navbar.module.css";
-
 // const Navbar = () => {
 //   return (
 //     <nav className={style.nav}>
 //       <Link to="/">
 //         <img src={logo} alt="SignBridge Logo" style={{ height: "45px" }} />
 //       </Link>
-
 //       <ul className={style.navLinks}>
 //         <li>
 //           <NavLink to="/">Home</NavLink>
@@ -41,14 +39,14 @@
 
 // export default Navbar;
 
-import React, { useState } from "react"; // إضافة useState
+import React, { useState } from "react";
 import logo from "../../assets/Logo.png";
 import { NavLink, Link } from "react-router-dom";
 import style from "./navbar.module.css";
-import { FaBars, FaTimes } from "react-icons/fa"; // استيراد الأيقونات
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false); // حالة القائمة
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -58,12 +56,10 @@ const Navbar = () => {
         <img src={logo} alt="SignBridge Logo" style={{ height: "45px" }} />
       </Link>
 
-      {/* أيقونة الموبايل */}
       <div className={style.menuIcon} onClick={toggleMenu}>
         {isOpen ? <FaTimes /> : <FaBars />}
       </div>
 
-      {/* الروابط - ستتغير كلاساتها بناءً على الحالة */}
       <ul className={`${style.navLinks} ${isOpen ? style.activeMenu : ""}`}>
         <li>
           <NavLink to="/" onClick={() => setIsOpen(false)}>
@@ -85,13 +81,12 @@ const Navbar = () => {
             Learning
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink to="/about" onClick={() => setIsOpen(false)}>
             About us
           </NavLink>
-        </li>
+        </li> */}
 
-        {/* أزرار تسجيل الدخول داخل القائمة في الموبايل */}
         <div className={style.mobileAuth}>
           <NavLink to="/login" onClick={() => setIsOpen(false)}>
             Login

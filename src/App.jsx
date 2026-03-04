@@ -9,6 +9,8 @@ import Colors from "./components/learningCategory/Colors";
 import Numbers from "./components/learningCategory/Numbers";
 import Sentences from "./components/learningCategory/Sentences";
 import Quiz from "./pages/quiz/Quiz";
+import Signup from "./pages/auth/signup/Signup";
+import Login from "./pages/auth/login/Login";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/sign-to-text" element={<SignToText />} />
           <Route path="/text-to-sign" element={<TextToSign />} />
           <Route path="/learning" element={<Learning />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/learning/letters" element={<Letters />} />
           <Route path="/learning/colors" element={<Colors />} />
           <Route path="/learning/numbers" element={<Numbers />} />
