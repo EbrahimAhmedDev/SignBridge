@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -16,7 +17,6 @@ const Signup = () => {
     password: "",
   });
 
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -26,12 +26,11 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       const fullData = {
-        name: `${formdata.firstName} ${formdata.secondName}`,
-        email: formdata.email,
+        name: `${formdata.firstName.trim()} ${formdata.secondName.trim()}`,
+        email: formdata.email.trim(),
         password: formdata.password,
       };
 
@@ -43,11 +42,32 @@ const Signup = () => {
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        alert("Account created successfully!");
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2300,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        await Toast.fire({
+          icon: "success",
+          title: "Account created!",
+        });
+
         navigate("/");
       }
     } catch (err) {
-      setError(err.response?.data?.error || "Something went wrong.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.response?.data?.error || "Something went wrong!",
+      });
     } finally {
       setLoading(false);
     }
@@ -65,14 +85,6 @@ const Signup = () => {
           <p className={style.subtitle}>
             Join our community to start learning sign language
           </p>
-
-          {error && (
-            <p
-              style={{ color: "red", fontSize: "0.8rem", marginBottom: "10px" }}
-            >
-              {error}
-            </p>
-          )}
 
           <div className={style.socialButtons}>
             <button className={style.socialBtn} type="button">
@@ -93,7 +105,7 @@ const Signup = () => {
               type="text"
               name="firstName"
               placeholder="First Name"
-              value={formdata.firstName.trim()}
+              value={formdata.firstName}
               onChange={handleChange}
               required
             />
@@ -101,7 +113,7 @@ const Signup = () => {
               type="text"
               name="secondName"
               placeholder="Second Name"
-              value={formdata.secondName.trim()}
+              value={formdata.secondName}
               onChange={handleChange}
               required
             />

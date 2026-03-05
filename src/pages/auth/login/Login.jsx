@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import style from "./login.module.css"; // تأكد من وجود ملف التنسيق
+import style from "./login.module.css"; // تأكد من إنشاء هذا الملف
 import loginImg from "../../../assets/image 10.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +15,6 @@ const Login = () => {
     password: "",
   });
 
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -24,7 +24,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       const response = await axios.post(
@@ -36,13 +35,28 @@ const Login = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
 
-        alert("Welcome back!");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+
+        await Toast.fire({
+          icon: "success",
+          title: `Welcome back, ${response.data.user.name.split(" ")[0]}!`,
+        });
+
         navigate("/");
       }
     } catch (err) {
-      setError(
-        err.response?.data?.error || "Login failed. Please check your data.",
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: err.response?.data?.error || "Invalid email or password",
+        confirmButtonColor: "#d33",
+      });
     } finally {
       setLoading(false);
     }
@@ -52,20 +66,14 @@ const Login = () => {
     <div className={style.loginContainer}>
       <div className={style.loginCard}>
         <div className={style.imageSection}>
-          <img src={loginImg} alt="Welcome back" />
+          <img src={loginImg} alt="Login visualization" />
         </div>
 
         <div className={style.formSection}>
           <h2 className={style.title}>Welcome Back</h2>
-          <p className={style.subtitle}>Log in to continue your journey</p>
-
-          {error && (
-            <p
-              style={{ color: "red", fontSize: "0.9rem", marginBottom: "10px" }}
-            >
-              {error}
-            </p>
-          )}
+          <p className={style.subtitle}>
+            Log in to continue your sign language journey
+          </p>
 
           <div className={style.socialButtons}>
             <button className={style.socialBtn} type="button">
@@ -104,7 +112,7 @@ const Login = () => {
               className={style.submitBtn}
               disabled={loading}
             >
-              {loading ? "Logging in..." : "Log In"}
+              {loading ? "Verifying..." : "Log In"}
             </button>
           </form>
 
