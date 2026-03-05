@@ -4,8 +4,9 @@ import loginImg from "../../../assets/image 10.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+
 import Swal from "sweetalert2";
+import API from "../../../api/authService";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
+      const response = await API.post(
         "http://localhost:3000/api/auth/login",
         formData,
       );
@@ -39,7 +40,7 @@ const Login = () => {
           toast: true,
           position: "top-end",
           showConfirmButton: false,
-          timer: 2000,
+          timer: 1500,
           timerProgressBar: true,
         });
 

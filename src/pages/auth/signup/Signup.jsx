@@ -4,8 +4,8 @@ import signupImg from "../../../assets/image 10.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
+import API from "../../../api/authService";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Signup = () => {
         password: formdata.password,
       };
 
-      const response = await axios.post(
+      const response = await API.post(
         "http://localhost:3000/api/auth/register",
         fullData,
       );
@@ -47,7 +47,7 @@ const Signup = () => {
           toast: true,
           position: "top-end",
           showConfirmButton: false,
-          timer: 2300,
+          timer: 1500,
           timerProgressBar: true,
           didOpen: (toast) => {
             toast.addEventListener("mouseenter", Swal.stopTimer);

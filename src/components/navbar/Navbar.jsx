@@ -1,54 +1,24 @@
-// import logo from "../../assets/Logo.png";
-// import { NavLink, Link } from "react-router-dom";
-// import style from "./navbar.module.css";
-// const Navbar = () => {
-//   return (
-//     <nav className={style.nav}>
-//       <Link to="/">
-//         <img src={logo} alt="SignBridge Logo" style={{ height: "45px" }} />
-//       </Link>
-//       <ul className={style.navLinks}>
-//         <li>
-//           <NavLink to="/">Home</NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/sign-to-text">Sign to Text</NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/text-to-sign">Text to Sign</NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/learning">Learning</NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/about">About us</NavLink>
-//         </li>
-//       </ul>
-
-//       <div className={style.auth}>
-//         <NavLink to="/login" className={style.loginBtn}>
-//           Login
-//         </NavLink>
-//         <NavLink to="/signup" className={style.signupBtn}>
-//           SignUp
-//         </NavLink>
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
-
-import React, { useState } from "react";
+import { useState } from "react";
 import logo from "../../assets/Logo.png";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import style from "./navbar.module.css";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setIsOpen(false);
+    navigate("/login");
+  };
 
   return (
     <nav className={style.nav}>
@@ -81,33 +51,58 @@ const Navbar = () => {
             Learning
           </NavLink>
         </li>
-        {/* <li>
-          <NavLink to="/about" onClick={() => setIsOpen(false)}>
-            About us
-          </NavLink>
-        </li> */}
 
         <div className={style.mobileAuth}>
-          <NavLink to="/login" onClick={() => setIsOpen(false)}>
-            Login
-          </NavLink>
-          <NavLink
-            to="/signup"
-            className={style.signupBtn}
-            onClick={() => setIsOpen(false)}
-          >
-            SignUp
-          </NavLink>
+          {token ? (
+            <div className={style.mobileUserInfo}>
+              <span className={style.mobileName}>{user?.name}</span>
+              <button onClick={handleLogout} className={style.logoutBtnMobile}>
+                <FaSignOutAlt /> Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <NavLink to="/login" onClick={() => setIsOpen(false)}>
+                Login
+              </NavLink>
+              <NavLink
+                to="/signup"
+                className={style.signupBtn}
+                onClick={() => setIsOpen(false)}
+              >
+                SignUp
+              </NavLink>
+            </>
+          )}
         </div>
       </ul>
 
+      {/* الشاشات الكبيرة: عرض الأفتار والاسم أو أزرار الدخول */}
       <div className={style.auth}>
-        <NavLink to="/login" className={style.loginBtn}>
-          Login
-        </NavLink>
-        <NavLink to="/signup" className={style.signupBtn}>
-          SignUp
-        </NavLink>
+        {token ? (
+          <div className={style.userProfile}>
+            <span className={style.userName}>{user?.name?.split(" ")[0]}</span>
+            <div className={style.avatar}>
+              {user?.name?.charAt(0).toUpperCase()}
+            </div>
+            <button
+              onClick={handleLogout}
+              className={style.logoutIconBtn}
+              title="Logout"
+            >
+              <FaSignOutAlt />
+            </button>
+          </div>
+        ) : (
+          <>
+            <NavLink to="/login" className={style.loginBtn}>
+              Login
+            </NavLink>
+            <NavLink to="/signup" className={style.signupBtn}>
+              SignUp
+            </NavLink>
+          </>
+        )}
       </div>
     </nav>
   );
