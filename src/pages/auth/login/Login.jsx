@@ -28,7 +28,7 @@ const Login = () => {
 
     try {
       const response = await API.post(
-        "http://localhost:3000/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         formData,
       );
 
