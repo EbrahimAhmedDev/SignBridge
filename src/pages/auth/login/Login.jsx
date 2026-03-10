@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import style from "./login.module.css"; // تأكد من إنشاء هذا الملف
+import style from "./login.module.css";
 import loginImg from "../../../assets/image 10.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-
 import Swal from "sweetalert2";
-import API from "../../../api/authService";
+import API from "../../../api/authService"; // استيراد ملف الـ API الخاص بك
 
 const Login = () => {
   const navigate = useNavigate();
@@ -27,10 +26,8 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await API.post(
-        "http://localhost:5000/api/auth/login",
-        formData,
-      );
+      // 1. استخدام المسار المختصر لأن baseURL موجود في authService
+      const response = await API.post("/auth/login", formData);
 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
@@ -55,7 +52,7 @@ const Login = () => {
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: err.response?.data?.error || "Invalid email or password",
+        text: err.response?.data?.message || "Invalid email or password",
         confirmButtonColor: "#d33",
       });
     } finally {

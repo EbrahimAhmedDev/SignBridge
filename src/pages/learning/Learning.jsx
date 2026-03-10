@@ -1,46 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom"; // استيراد Link
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import style from "./learning.module.css";
+import API from "../../api/authService";
 import lettersImg from "../../assets/learning1.png";
-import colorsImg from "../../assets/learninig2.png";
-import numbersImg from "../../assets/learninig3.png";
-import sentencesImg from "../../assets/learninig4.png";
 
 const Learning = () => {
-  const modules = [
-    {
-      id: 1,
-      title: "Learning Letters",
-      description: "Learn Arabic alphabet in sign language.",
-      image: lettersImg,
-      btnColor: "#fcd4b4",
-      path: "/learning/letters", // المسار الخاص بكل موديول
-    },
-    {
-      id: 2,
-      title: "Learning Colors",
-      description: "Learn Colors in sign language.",
-      image: colorsImg,
-      btnColor: "#c1e8ed",
-      path: "/learning/colors",
-    },
-    {
-      id: 3,
-      title: "Learning Numbers",
-      description: "Learn to Count in sign language.",
-      image: numbersImg,
-      btnColor: "#d3d3df",
-      path: "/learning/numbers",
-    },
-    {
-      id: 4,
-      title: "Learning Famous Sentences",
-      description: "Learn the Most Famous Sentences in Sign Language",
-      image: sentencesImg,
-      btnColor: "#cce4b0",
-      path: "/learning/sentences",
-    },
-  ];
+  const [modules, setModules] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  const token = localStorage.getItem("token");
+
+  const btnColors = ["#fcd4b4", "#c1e8ed", "#d3d3df", "#cce4b0"];
+
+  useEffect(() => {
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+    const getModules = async () => {
+      try {
+        const res = await API.get("/modules");
+        setModules(res.data);
+      } catch (err) {
+        console.error("Error fetching modules:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getModules();
+  }, [token]);
+
+  if (loading) return <div className={style.loader}>Loading...</div>;
+
+  if (!token) {
+    return (
+      <div className={style.pageContainer}>
+        <div className={style.authNoticeSection}>
+          <h1 className={style.mainTitle}>Access Restricted</h1>
+          <p className={style.description}>
+            Please log in or create an account to view our learning modules and start your journey.
+          </p>
+          <div className={style.authActions}>
+            <Link to="/login" className={style.loginBtn}>Login Now</Link>
+            <Link to="/signup" className={style.signupBtn}>Create Account</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={style.pageContainer}>
@@ -53,19 +61,21 @@ const Learning = () => {
       </div>
 
       <div className={style.modulesGrid}>
-        {modules.map((mod) => (
-          <div key={mod.id} className={style.card}>
+        {modules.map((mod, index) => (
+          <div key={mod._id} className={style.card}>
             <div className={style.imageWrapper}>
-              <img src={mod.image} alt={mod.title} className={style.modImage} />
+              <img
+                src={mod.coverImage?.url || lettersImg}
+                alt={mod.title}
+              />
             </div>
             <div className={style.infoWrapper}>
               <h3 className={style.modTitle}>{mod.title}</h3>
               <p className={style.modDesc}>{mod.description}</p>
-              {/* تحويل الـ button إلى Link وتمرير الـ path */}
               <Link
-                to={mod.path}
+                to={`/learning/${mod._id}`}
                 className={style.startBtn}
-                style={{ backgroundColor: mod.btnColor }}
+                style={{ backgroundColor: btnColors[index % btnColors.length] }}
               >
                 Start Learning
               </Link>

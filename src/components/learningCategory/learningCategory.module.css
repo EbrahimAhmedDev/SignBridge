@@ -1,6 +1,9 @@
 .container {
   padding: 40px 8%;
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .mainTitle {
   font-family: "Inria Serif", serif;
@@ -14,6 +17,7 @@
   gap: 30px;
   max-width: 1000px;
   margin: 0 auto;
+  flex-grow: 1;
 }
 
 .itemCard {
@@ -92,21 +96,7 @@
   max-height: 90%;
   object-fit: contain;
 }
-.playOverlay {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.4);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #fff;
-}
-.playIcon {
-  color: white;
-  font-size: 2rem;
-}
+
 .modalLabelBox {
   padding: 20px;
   text-align: center;
@@ -126,9 +116,10 @@
 }
 
 .quizSection {
-  margin-top: 80px;
-  padding: 40px 0;
+  margin-top: 40px; 
+  padding: 60px 0; 
   border-top: 1px dashed #ccc;
+  width: 100%;
 }
 .quizTitle {
   font-size: 2rem;
@@ -156,6 +147,7 @@
   background: #bcc0d1;
   color: #003366;
 }
+
 
 @media (max-width: 1024px) {
   .itemsGrid {
@@ -204,15 +196,6 @@
   .modalLabelBox {
     font-size: 1.4rem;
     padding: 15px;
-  }
-
-  .playOverlay {
-    width: 60px;
-    height: 60px;
-  }
-
-  .playIcon {
-    font-size: 1.5rem;
   }
 
   .closeBtn {

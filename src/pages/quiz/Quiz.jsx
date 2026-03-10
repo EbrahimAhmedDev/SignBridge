@@ -1,62 +1,91 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import  { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import style from "./quiz.module.css";
-import signImage from "../../assets/learning1.png";
+import Swal from "sweetalert2";
+import API from "../../api/authService"; 
 
 const Quiz = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [score, setScore] = useState(0);
 
-  const questions = [
-    { id: 1, letter: "A", options: [signImage, signImage, signImage] },
-    { id: 2, letter: "B", options: [signImage, signImage, signImage] },
-    { id: 3, letter: "C", options: [signImage, signImage, signImage] },
-    { id: 4, letter: "D", options: [signImage, signImage, signImage] },
-  ];
+useEffect(() => {
+  const fetchQuiz = async () => {
+    try {
+      const response = await API.get(`/quizzes/${id}`); 
+      
+      if (response.data.success) {
+        setQuestions(response.data.questions);
+      }
+    } catch (err) {
+      console.error("Quiz Fetch Error:", err.response);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: err.response?.data?.message || "Could not load quiz questions",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchQuiz();
+}, [id]);
 
-  const handleSelect = (questionId, optionIndex) => {
+  const handleSelect = (questionIndex, optionIndex) => {
     if (submitted) return;
-    setSelectedAnswers({ ...selectedAnswers, [questionId]: optionIndex });
+    setSelectedAnswers({ ...selectedAnswers, [questionIndex]: optionIndex });
   };
 
   const handleSubmit = () => {
     let correctCount = 0;
-    questions.forEach((q) => {
-      if (selectedAnswers[q.id] === 0) correctCount++;
+    questions.forEach((q, index) => {
+      const selectedIdx = selectedAnswers[index];
+      if (selectedIdx !== undefined && q.options[selectedIdx].correct) {
+        correctCount++;
+      }
     });
     setScore(correctCount);
     setSubmitted(true);
   };
+
+  if (loading) return <div className={style.loader}>Generating Quiz...</div>;
 
   return (
     <div className={style.quizPage}>
       <h1 className={style.resultTitle}>Sign Language Quiz</h1>
 
       <div className={style.questionsContainer}>
-        {questions.map((q, index) => (
-          <div key={q.id} className={style.questionWrapper}>
+        {questions.map((q, qIndex) => (
+          <div key={qIndex} className={style.questionWrapper}>
             <h2 className={style.questionText}>
-              {index + 1}. Choose the correct sign for letter "{q.letter}"
+              {qIndex + 1}. {q.questionText}
             </h2>
             <div className={style.optionsGrid}>
-              {q.options.map((img, i) => {
-                const isSelected = selectedAnswers[q.id] === i;
-                const isCorrect = submitted && i === 0;
-                const isWrong = submitted && isSelected && i !== 0;
+              {q.options.map((opt, i) => {
+                const isSelected = selectedAnswers[qIndex] === i;
+                const isCorrect = submitted && opt.correct;
+                const isWrong = submitted && isSelected && !opt.correct;
+
                 return (
                   <div
                     key={i}
-                    className={`${style.optionCard} ${isSelected ? style.selectedBorder : ""} ${isCorrect ? style.correctResult : ""} ${isWrong ? style.wrongResult : ""}`}
-                    onClick={() => handleSelect(q.id, i)}
+                    className={`${style.optionCard} 
+                      ${isSelected ? style.selectedBorder : ""} 
+                      ${isCorrect ? style.correctResult : ""} 
+                      ${isWrong ? style.wrongResult : ""}`}
+                    onClick={() => handleSelect(qIndex, i)}
                   >
-                    <img src={img} alt="Sign option" />
+                    <img src={opt.imageUrl?.url || opt.imageUrl} alt="Sign option" />
                   </div>
                 );
               })}
             </div>
-            {index !== questions.length - 1 && <hr className={style.line} />}
+            {qIndex !== questions.length - 1 && <hr className={style.line} />}
           </div>
         ))}
       </div>
@@ -73,14 +102,11 @@ const Quiz = () => {
         ) : (
           <div className={style.resultControls}>
             <div className={style.scoreBadge}>
-              Your Score:{" "}
-              <span>
-                {score} / {questions.length}
-              </span>
+              Your Score: <span>{score} / {questions.length}</span>
             </div>
             <button
               className={style.backBtn}
-              onClick={() => navigate("/learning/letters")}
+              onClick={() => navigate(`/learning/${id}`)}
             >
               Back to Learning
             </button>
