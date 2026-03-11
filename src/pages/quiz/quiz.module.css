@@ -1,216 +1,194 @@
 .quizPage {
-  width: 100%;
   min-height: 100vh;
-  padding: 50px 10%;
-  background-color: #ffffff;
+  padding: 60px 10%;
+  background-color: #f8fafc;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.resultTitle {
-  font-family: "Inria Serif", serif;
-  color: #003366;
-  font-size: 2.2rem;
+.header {
+  text-align: center;
   margin-bottom: 50px;
 }
+.title {
+  color: #003366;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
+}
 
-.questionsContainer {
+.questionsList {
   width: 100%;
   max-width: 900px;
 }
 
-.questionWrapper {
-  margin-bottom: 60px;
+.questionBox {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
 }
 
 .questionText {
-  color: #003366;
-  font-size: 1.4rem;
-  margin-bottom: 30px;
-  text-align: center;
+  color: #0f172a;
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  font-weight: 600;
 }
 
 .optionsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 20px;
 }
 
 .optionCard {
   background: #fff;
-  border: 2px solid #e0e0e0;
-  border-radius: 15px;
+  border: 2px solid #f1f5f9;
+  border-radius: 16px;
   padding: 15px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-
+  transition: all 0.2s ease;
+  height: 200px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 250px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.optionCard:hover {
-  border-color: #003366;
-  transform: translateY(-3px);
-}
-
-.selectedBorder {
-  border: 4px solid #003366 !important;
-  background-color: #f0f7ff;
-  box-shadow: 0 5px 15px rgba(0, 51, 102, 0.2);
-}
-
-.correctResult {
-  border-color: #28a745 !important;
-  background-color: #f1fbf3 !important;
-}
-
-.wrongResult {
-  border-color: #dc3545 !important;
-  background-color: #fff5f5 !important;
+  justify-content: center;
 }
 
 .optionCard img {
   width: 100%;
-  height: 100%;
+  height: 140px;
   object-fit: contain;
 }
 
-.line {
-  border: none;
-  border-top: 1px dashed #ccc;
-  margin-top: 50px;
+.selected {
+  border-color: #003366;
+  background-color: #f0f7ff;
+}
+.correct {
+  border-color: #22c55e !important;
+  background-color: #f0fdf4 !important;
+}
+.wrong {
+  border-color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+}
+
+.labelHint {
+  margin-top: 10px;
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 0.9rem;
+}
+
+.footer {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 60px;
 }
 
 .submitBtn {
-  margin-top: 20px;
-  padding: 15px 80px;
-  background-color: #003366;
+  background: #003366;
   color: white;
+  padding: 18px 80px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .submitBtn:disabled {
-  background-color: #cccccc;
-  color: #888;
+  background: #cbd5e1;
   cursor: not-allowed;
-  opacity: 0.7;
 }
 
-.submitBtn:not(:disabled):hover {
-  background-color: #002244;
-  transform: scale(1.05);
-}
-
-.actionSection {
-  margin-top: 40px;
-  padding-bottom: 60px;
-  width: 100%;
+.resultContainer {
   display: flex;
-  justify-content: center;
-}
-
-.resultControls {
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 30px;
-  animation: fadeIn 0.5s ease-in;
+  gap: 25px;
+  width: 100%;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.scoreDisplay {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0f172a;
+  background: white;
+  padding: 15px 40px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+.scoreDisplay span {
+  color: #22c55e;
 }
 
-.scoreBadge {
-  background-color: #f0f7ff;
-  border: 2px solid #003366;
-  padding: 12px 25px;
-  border-radius: 10px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #003366;
+/* تنسيق مجموعة الأزرار */
+.buttonGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 550px;
 }
 
-.scoreBadge span {
-  color: #28a745;
+.profileBtn,
+.backBtn {
+  flex: 1;
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+  white-space: nowrap;
+}
+
+.profileBtn {
+  background-color: #22c55e;
+  color: white;
+}
+.profileBtn:hover {
+  background-color: #1a9e4a;
+  transform: translateY(-2px);
 }
 
 .backBtn {
-  padding: 15px 40px;
   background-color: #003366;
   color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
 }
-
 .backBtn:hover {
   background-color: #002244;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.submitBtn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
   .optionsGrid {
     grid-template-columns: 1fr;
-    gap: 15px;
   }
-
-  .quizPage {
-    padding: 30px 5%;
-  }
-
-  .optionCard {
-    padding: 8px;
-    max-width: 250px;
-    margin: 0 auto;
-  }
-
-  .optionCard img {
-    max-height: 150px;
-    width: auto;
-  }
-
-  .questionText {
-    font-size: 1.1rem;
-  }
-
-  .resultControls {
+  .buttonGroup {
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
   }
-
-  .scoreBadge {
-    font-size: 1.1rem;
-    padding: 10px 20px;
-  }
-
-  .submitBtn,
+  .profileBtn,
   .backBtn {
-    padding: 12px 40px;
     width: 100%;
+    max-width: 300px;
   }
 }
