@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/Home";
 import SignToText from "./pages/signToText/SignToText";
@@ -10,37 +10,65 @@ import Login from "./pages/auth/login/Login";
 import LearningCategory from "./components/learningCategory/LearningCategory";
 import ProtectedRoute from "./components/protectedRoutes/ProtectedRoute";
 import NotFound from "./pages/nouFound/NotFound";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminOverview from "./pages/admin/AdminOverview";
+import AdminModules from "./pages/admin/AdminModules";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/sign-to-text" element={<SignToText />} />
-          <Route path="/text-to-sign" element={<TextToSign />} />
-          <Route path="/learning" element={<Learning />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          {/* Public Routes — with Navbar */}
           <Route
-            path="/learning/:id"
+            path="/*"
             element={
-              <ProtectedRoute>
-                <LearningCategory />
-              </ProtectedRoute>
+              <>
+                <Navbar />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/sign-to-text" element={<SignToText />} />
+                  <Route path="/text-to-sign" element={<TextToSign />} />
+                  <Route path="/learning" element={<Learning />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/learning/:id"
+                    element={
+                      <ProtectedRoute>
+                        <LearningCategory />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/learning/:id/quiz"
+                    element={
+                      <ProtectedRoute>
+                        <Quiz />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </>
             }
           />
+
+          {/* Admin Routes — no Navbar, own sidebar layout */}
           <Route
-            path="/learning/:id/quiz"
+            path="/admin"
             element={
-              <ProtectedRoute>
-                <Quiz />
+              <ProtectedRoute adminOnly>
+                <AdminLayout />
               </ProtectedRoute>
             }
-          />
-          <Route path="*" element={<NotFound />} />
+          >
+            <Route index element={<Navigate to="overview" replace />} />
+            <Route path="overview" element={<AdminOverview />} />
+            <Route path="modules" element={<AdminModules />} />
+            <Route path="users" element={<AdminUsers />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

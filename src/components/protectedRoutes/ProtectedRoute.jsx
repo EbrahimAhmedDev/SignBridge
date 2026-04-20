@@ -2,9 +2,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, adminOnly = false }) => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+
+  // Parse user role from localStorage
+  const rawUser = localStorage.getItem("user");
+  const user = rawUser ? (() => { try { return JSON.parse(rawUser); } catch { return null; } })() : null;
+  const isAdmin = user?.role === "admin";
 
   useEffect(() => {
     if (!token) {
@@ -34,12 +39,21 @@ const ProtectedRoute = ({ children }) => {
           navigate("/");
         }
       });
+      return;
     }
-  }, [token, navigate]);
 
-  if (!token) {
-    return null;
-  }
+    if (adminOnly && !isAdmin) {
+      Swal.fire({
+        title: "Access Denied",
+        text: "You do not have permission to access the admin area.",
+        icon: "error",
+        confirmButtonColor: "#003366",
+      }).then(() => navigate("/"));
+    }
+  }, [token, navigate, adminOnly, isAdmin]);
+
+  if (!token) return null;
+  if (adminOnly && !isAdmin) return null;
 
   return children;
 };
