@@ -4,7 +4,6 @@ import styles from "./TextToSign.module.css";
 import { getAllSigns } from "../../api/signsService";
 
 const defaultVideo = {
-  title: "Welcome to SignBridge Text to Sign",
   videoUrl: "https://www.youtube.com/embed/umlJJFVgYVI",
 };
 
@@ -83,62 +82,64 @@ const TextToSign = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.headerSection}>
-        <h1 className={styles.mainTitle}>Text to Sign Video Search</h1>
+        {/* <h1 className={styles.mainTitle}>Text to Sign Video Search</h1>
         <p className={styles.description}>
           Find signs instantly and watch the matching video.
-        </p>
+        </p> */}
       </div>
 
-      <div className={styles.layoutCard}>
-        <div className={styles.searchColumn}>
-          <div className={styles.searchWrapper}>
-            <FaSearch className={styles.searchIcon} aria-hidden="true" />
-            <input
-              type="text"
-              className={styles.searchInput}
-              placeholder="Search for a word or phrase..."
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-            />
+      <div className={styles.contentGrid}>
+        <div className={styles.mainPanel}>
+          <div className={styles.videoColumn}>
+            {selectedSign?.label ? (
+              <h2 className={styles.videoTitle}>{selectedSign.label}</h2>
+            ) : null}
+            <div className={styles.videoContainer}>
+              <iframe
+                title={selectedSign?.label || "Welcome to SignBridge"}
+                src={activeVideo.videoUrl}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
           </div>
 
-          <div className={styles.resultsList}>
-            {isLoading ? (
-              <p className={styles.emptyState}>Loading signs...</p>
-            ) : errorMessage ? (
-              <p className={styles.errorState}>{errorMessage}</p>
-            ) : filteredSigns.length > 0 ? (
-              filteredSigns.map((sign) => (
-                <button
-                  key={getSignId(sign)}
-                  type="button"
-                  className={`${styles.resultItem} ${
-                    getSignId(selectedSign) === getSignId(sign)
-                      ? styles.selectedItem
-                      : ""
-                  }`}
-                  onClick={() => setSelectedSign(sign)}
-                >
-                  {getHighlightedLabel(sign.label)}
-                </button>
-              ))
-            ) : (
-              <p className={styles.emptyState}>No matching signs found.</p>
-            )}
-          </div>
-        </div>
+          <div className={styles.searchColumn}>
+            <div className={styles.searchWrapper}>
+              <FaSearch className={styles.searchIcon} aria-hidden="true" />
+              <input
+                type="text"
+                className={styles.searchInput}
+                placeholder="Search for a word or phrase..."
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
+            </div>
 
-        <div className={styles.videoColumn}>
-          <h2 className={styles.videoTitle}>
-            {selectedSign?.label || activeVideo.title}
-          </h2>
-          <div className={styles.videoContainer}>
-            <iframe
-              title={selectedSign?.label || "Welcome to SignBridge"}
-              src={activeVideo.videoUrl}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            <div className={styles.resultsList}>
+              {isLoading ? (
+                <p className={styles.emptyState}>Loading signs...</p>
+              ) : errorMessage ? (
+                <p className={styles.errorState}>{errorMessage}</p>
+              ) : filteredSigns.length > 0 ? (
+                filteredSigns.map((sign) => (
+                  <button
+                    key={getSignId(sign)}
+                    type="button"
+                    className={`${styles.resultItem} ${
+                      getSignId(selectedSign) === getSignId(sign)
+                        ? styles.selectedItem
+                        : ""
+                    }`}
+                    onClick={() => setSelectedSign(sign)}
+                  >
+                    {getHighlightedLabel(sign.label)}
+                  </button>
+                ))
+              ) : (
+                <p className={styles.emptyState}>No matching signs found.</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
