@@ -39,6 +39,7 @@ const Navbar = () => {
         <li>
           <NavLink to="/sign-to-text" onClick={() => setIsOpen(false)}>
             Sign to Text
+            <span className={style.beta}>Beta</span>
           </NavLink>
         </li>
         <li>

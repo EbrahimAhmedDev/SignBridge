@@ -22,6 +22,16 @@
   transition: 0.3s;
 }
 
+.beta {
+  background-color: #ff4d4d;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
 .navLinks a:global(.active) {
   color: #333;
   font-weight: 700;

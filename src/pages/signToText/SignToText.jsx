@@ -7,7 +7,6 @@ import style from "./signToText.module.css";
 const TARGET_CAPTURE_FPS = 30;
 const CAPTURE_INTERVAL_MS = Math.floor(1000 / TARGET_CAPTURE_FPS);
 const MIN_PROCESS_FRAMES = 5;
-const MAX_FRAMES = 180;
 
 const SignToText = () => {
   const videoRef = useRef(null);
@@ -61,10 +60,6 @@ const SignToText = () => {
 
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     framesRef.current.push(canvas.toDataURL("image/jpeg", 0.7));
-
-    if (framesRef.current.length > MAX_FRAMES) {
-      framesRef.current.shift();
-    }
   };
 
   const handleStart = async () => {
