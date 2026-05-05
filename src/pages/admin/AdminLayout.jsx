@@ -4,6 +4,7 @@ import "./AdminDashboard.css";
 const navItems = [
   { to: "/admin/overview", label: "Overview", icon: "📊" },
   { to: "/admin/modules", label: "Modules", icon: "📚" },
+  { to: "/admin/signs", label: "Text to Sign", icon: "🔤" },
   { to: "/admin/users", label: "Users", icon: "👥" },
 ];
 

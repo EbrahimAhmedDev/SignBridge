@@ -14,6 +14,7 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminModules from "./pages/admin/AdminModules";
 import AdminUsers from "./pages/admin/AdminUsers";
+import AdminSigns from "./pages/admin/AdminSigns";
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
             <Route index element={<Navigate to="overview" replace />} />
             <Route path="overview" element={<AdminOverview />} />
             <Route path="modules" element={<AdminModules />} />
+            <Route path="signs" element={<AdminSigns />} />
             <Route path="users" element={<AdminUsers />} />
           </Route>
         </Routes>

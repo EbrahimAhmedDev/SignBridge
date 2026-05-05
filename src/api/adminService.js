@@ -23,3 +23,13 @@ export const deleteSignItem = (moduleId, itemId) =>
 
 // Users
 export const getAllUsers = () => API.get("/admin/users");
+
+// Text-to-Sign Signs
+export const getAdminSigns = () => API.get("/admin/signs");
+
+export const createAdminSign = (payload) => API.post("/admin/signs", payload);
+
+export const updateAdminSign = (id, payload) =>
+  API.put(`/admin/signs/${id}`, payload);
+
+export const deleteAdminSign = (id) => API.delete(`/admin/signs/${id}`);

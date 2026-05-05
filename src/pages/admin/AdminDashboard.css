@@ -615,11 +615,40 @@
   font-size: 0.85rem;
 }
 
+.admin-signs-form {
+  padding: 18px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.admin-signs-form input,
+.admin-inline-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 0.84rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.admin-signs-form input:focus,
+.admin-inline-input:focus {
+  border-color: rgba(99, 102, 241, 0.55);
+}
+
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 768px) {
   .admin-sidebar { width: 200px; }
   .admin-stats-grid { grid-template-columns: 1fr 1fr; }
   .admin-content { padding: 16px; }
+  .admin-signs-form {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 560px) {
