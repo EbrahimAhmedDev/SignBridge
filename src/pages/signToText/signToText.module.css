@@ -138,6 +138,27 @@
   font-style: italic;
 }
 
+.predictionText {
+  color: #001f54;
+  line-height: 1.7;
+  margin: 2px 0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.08rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.predictionLabel {
+  flex: 1;
+}
+
+.predictionValue {
+  white-space: nowrap;
+}
+
 .buttonGroup {
   display: flex;
   gap: 15px;
