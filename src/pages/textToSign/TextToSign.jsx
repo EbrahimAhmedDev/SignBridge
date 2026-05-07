@@ -4,7 +4,8 @@ import styles from "./TextToSign.module.css";
 import { getAllSigns } from "../../api/signsService";
 
 const defaultVideo = {
-  videoUrl: "https://www.youtube.com/embed/umlJJFVgYVI",
+  videoUrl: "https://www.youtube.com/embed/FVjpLa8GqeM",
+  // https://youtu.be/FVjpLa8GqeM?si=tkx3ph04bnEAUbhv
 };
 
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
