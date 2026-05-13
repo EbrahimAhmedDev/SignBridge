@@ -43,12 +43,24 @@ const AdminSigns = () => {
 
     try {
       setSubmitting(true);
-      await createAdminSign({
+      const response = await createAdminSign({
         label: form.label.trim(),
         videoUrl: form.videoUrl.trim(),
       });
+      const createdSign = response?.data;
       setForm(EMPTY_FORM);
-      loadSigns();
+      if (createdSign?._id) {
+        setSigns((prev) => [createdSign, ...prev]);
+      } else {
+        loadSigns();
+      }
+      Swal.fire({
+        title: "Added",
+        text: "Sign entry created successfully.",
+        icon: "success",
+        timer: 1200,
+        showConfirmButton: false,
+      });
     } catch (err) {
       const msg =
         err?.response?.data?.message ?? err?.message ?? "Unknown error";
@@ -225,6 +237,7 @@ const AdminSigns = () => {
                         <>
                           <button
                             className="btn-primary"
+                            type="button"
                             style={{ padding: "6px 12px", fontSize: "0.78rem" }}
                             onClick={() => handleUpdate(sign._id)}
                           >
@@ -232,6 +245,7 @@ const AdminSigns = () => {
                           </button>
                           <button
                             className="btn-cancel"
+                            type="button"
                             style={{ padding: "6px 12px", fontSize: "0.78rem" }}
                             onClick={() => {
                               setEditingId(null);
@@ -245,12 +259,14 @@ const AdminSigns = () => {
                         <>
                           <button
                             className="btn-edit"
+                            type="button"
                             onClick={() => startEdit(sign)}
                           >
                             ✏️ Edit
                           </button>
                           <button
                             className="btn-danger"
+                            type="button"
                             onClick={() => handleDelete(sign._id)}
                           >
                             🗑 Delete
@@ -270,4 +286,3 @@ const AdminSigns = () => {
 };
 
 export default AdminSigns;
-

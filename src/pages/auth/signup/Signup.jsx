@@ -34,10 +34,7 @@ const Signup = () => {
         password: formdata.password,
       };
 
-      const response = await API.post(
-        "http://localhost:5000/api/auth/register",
-        fullData,
-      );
+      const response = await API.post("/auth/register", fullData);
 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);

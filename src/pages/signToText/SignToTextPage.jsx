@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FaStopCircle, FaPlay } from "react-icons/fa";
 import { LuScanLine } from "react-icons/lu";
-import { predictSignSentence } from "../../api/aiService";
+import { predictSignWord } from "../../api/aiService";
 import style from "./signToText.module.css";
 
 const TARGET_CAPTURE_FPS = 30;
 const CAPTURE_INTERVAL_MS = Math.floor(1000 / TARGET_CAPTURE_FPS);
-const MIN_PROCESS_FRAMES = 60;
+const MIN_PROCESS_FRAMES = 5;
 
 const SignToText = () => {
   const videoRef = useRef(null);
@@ -18,9 +18,8 @@ const SignToText = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [convertedText, setConvertedText] = useState(
-    "Converted sentence will appear here..."
+    "Converted word will appear here..."
   );
-  const [detectedWords, setDetectedWords] = useState([]);
 
   const clearCaptureLoop = useCallback(() => {
     if (captureIntervalRef.current) {
@@ -82,7 +81,6 @@ const SignToText = () => {
       streamRef.current = stream;
       framesRef.current = [];
       setConvertedText("Capturing signs...");
-      setDetectedWords([]);
 
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -110,28 +108,24 @@ const SignToText = () => {
 
     if (capturedFrames.length < MIN_PROCESS_FRAMES) {
       setConvertedText(
-        "Record at least 2-3 seconds before stopping, then try again."
+        "Not enough frames captured. Keep signing a bit longer and try again."
       );
-      setDetectedWords([]);
       return;
     }
 
     setIsLoading(true);
-    setConvertedText("Processing sentence...");
+    setConvertedText("Processing word...");
 
     try {
-      const { data } = await predictSignSentence(capturedFrames);
-      setConvertedText(data.sentence || "No sentence returned.");
-      setDetectedWords(
-        Array.isArray(data.words_detected) ? data.words_detected : [],
-      );
+      const { data } = await predictSignWord(capturedFrames);
+      const bestWord = String(data?.best_label || "").trim();
+      setConvertedText(bestWord || "No word returned.");
     } catch (error) {
       setConvertedText(
         error?.response?.data?.detail ||
           error?.response?.data?.message ||
-          "Could not convert sign to a sentence.",
+          "Could not convert sign to a word.",
       );
-      setDetectedWords([]);
     } finally {
       setIsLoading(false);
     }
@@ -177,22 +171,9 @@ const SignToText = () => {
           </div>
 
           <div className={style.textColumn}>
-            <h3 className={style.convertedHeading}>Converted Sentence</h3>
+            <h3 className={style.convertedHeading}>Converted Word</h3>
             <div className={style.resultBox}>
               <p className={style.resultText}>{convertedText}</p>
-              {detectedWords.length > 0 && (
-                <>
-                  <p className={style.resultText}>Detected Words:</p>
-                  {detectedWords.map((word, index) => (
-                    <p
-                      key={`${word}-${index}`}
-                      className={style.predictionText}
-                    >
-                      <span className={style.predictionLabel}>{word}</span>
-                    </p>
-                  ))}
-                </>
-              )}
             </div>
           </div>
         </div>

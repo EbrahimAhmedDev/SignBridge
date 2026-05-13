@@ -65,7 +65,7 @@ const Quiz = () => {
       if (finalPercent >= 50) {
         Swal.fire({
           title: "🎉 Congratulations!",
-          html: `<b style="color: #28a745; font-size: 1.2rem;">You passed with ${finalPercent}%</b><br/>Your certificate is now available in your profile!`,
+          html: `<b style="color: #28a745; font-size: 1.2rem;">You passed with ${finalPercent}%</b>`,
           icon: "success",
           confirmButtonText: "Awesome!",
           confirmButtonColor: "#003366",
@@ -149,16 +149,6 @@ const Quiz = () => {
             </div>
 
             <div className={style.buttonGroup}>
-              {/* يظهر فقط في حالة النجاح 50% فأكثر */}
-              {score / questions.length >= 0.5 && (
-                <button
-                  className={style.profileBtn}
-                  onClick={() => navigate("/learning")}
-                >
-                  View My Profile
-                </button>
-              )}
-
               <button
                 className={style.backBtn}
                 onClick={() => navigate("/learning")}
