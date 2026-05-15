@@ -4,9 +4,12 @@ import { LuScanLine } from "react-icons/lu";
 import { predictSignWord } from "../../api/aiService";
 import style from "./signToText.module.css";
 
-const TARGET_CAPTURE_FPS = 30;
+const TARGET_CAPTURE_FPS = 20;
 const CAPTURE_INTERVAL_MS = Math.floor(1000 / TARGET_CAPTURE_FPS);
 const MIN_PROCESS_FRAMES = 5;
+const MAX_PROCESS_FRAMES = 120;
+const MAX_FRAME_WIDTH = 480;
+const JPEG_QUALITY = 0.55;
 
 const SignToText = () => {
   const videoRef = useRef(null);
@@ -49,8 +52,12 @@ const SignToText = () => {
       return;
     }
 
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
+    const sourceWidth = video.videoWidth || 640;
+    const sourceHeight = video.videoHeight || 480;
+    const scale = Math.min(1, MAX_FRAME_WIDTH / sourceWidth);
+
+    canvas.width = Math.round(sourceWidth * scale);
+    canvas.height = Math.round(sourceHeight * scale);
 
     const context = canvas.getContext("2d");
     if (!context) {
@@ -58,7 +65,7 @@ const SignToText = () => {
     }
 
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    framesRef.current.push(canvas.toDataURL("image/jpeg", 0.7));
+    framesRef.current.push(canvas.toDataURL("image/jpeg", JPEG_QUALITY));
   };
 
   const handleStart = async () => {
@@ -103,10 +110,14 @@ const SignToText = () => {
     }
 
     const capturedFrames = [...framesRef.current];
+    const framesForPrediction =
+      capturedFrames.length > MAX_PROCESS_FRAMES
+        ? capturedFrames.slice(-MAX_PROCESS_FRAMES)
+        : capturedFrames;
     stopCamera();
     setIsRecording(false);
 
-    if (capturedFrames.length < MIN_PROCESS_FRAMES) {
+    if (framesForPrediction.length < MIN_PROCESS_FRAMES) {
       setConvertedText(
         "Not enough frames captured. Keep signing a bit longer and try again."
       );
@@ -117,7 +128,7 @@ const SignToText = () => {
     setConvertedText("Processing word...");
 
     try {
-      const { data } = await predictSignWord(capturedFrames);
+      const { data } = await predictSignWord(framesForPrediction);
       const bestWord = String(data?.best_label || "").trim();
       setConvertedText(bestWord || "No word returned.");
     } catch (error) {
