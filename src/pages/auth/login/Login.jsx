@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import style from "./login.module.css";
 import loginImg from "../../../assets/image 10.png";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+// import { FcGoogle } from "react-icons/fc";
+// import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import API from "../../../api/authService"; // استيراد ملف الـ API الخاص بك
@@ -69,7 +69,7 @@ const Login = () => {
 
         <div className={style.formSection}>
           <h2 className={style.title}>Welcome Back</h2>
-          <p className={style.subtitle}>
+          {/* <p className={style.subtitle}>
             Log in to continue your sign language journey
           </p>
 
@@ -85,7 +85,7 @@ const Login = () => {
 
           <div className={style.divider}>
             <span>or</span>
-          </div>
+          </div> */}
 
           <form className={style.form} onSubmit={handleSubmit}>
             <input
