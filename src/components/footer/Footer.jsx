@@ -54,7 +54,7 @@ const Footer = () => {
           © {new Date().getFullYear()} Sign Language Information Hub.
           Educational purposes.
         </p>
-        <p>Made with ❤️ Ebraim</p>
+        <p>Made with ❤️ by the SignBridge Team</p>
       </div>
     </footer>
   );
